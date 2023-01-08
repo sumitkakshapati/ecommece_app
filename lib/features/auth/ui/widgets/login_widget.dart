@@ -2,6 +2,7 @@ import 'package:ecommerce_app/common/buttons/custom_rounded_button.dart';
 import 'package:ecommerce_app/common/custom_theme.dart';
 import 'package:ecommerce_app/common/textfield/custom_textfield.dart';
 import 'package:ecommerce_app/features/auth/ui/screens/signup_page.dart';
+import 'package:ecommerce_app/features/dashboard/ui/screens/dashboard_screens.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -76,7 +77,14 @@ class _LoginWidgetsState extends State<LoginWidgets> {
                   CustomRoundedButtom(
                     title: "LOGIN",
                     onPressed: () {
-                      if (_formKey.currentState!.validate()) {}
+                      Navigator.of(context).pushAndRemoveUntil(
+                        PageTransition(
+                          child: DashboardScreens(),
+                          type: PageTransitionType.fade,
+                        ),
+                        (route) => false,
+                      );
+                      // if (_formKey.currentState!.validate()) {}
                     },
                   ),
                   const SizedBox(height: 20),
