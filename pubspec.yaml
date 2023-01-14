@@ -41,6 +41,7 @@ dependencies:
   loading_overlay: 
   page_transition: ^2.0.9
   google_fonts: ^3.0.1
+  bottom_navy_bar: ^6.0.0
 
 dev_dependencies:
   flutter_test:

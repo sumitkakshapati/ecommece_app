@@ -1,6 +1,8 @@
+import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:ecommerce_app/common/custom_theme.dart';
 import 'package:ecommerce_app/features/cart/ui/screens/cart_page.dart';
 import 'package:ecommerce_app/features/homepage/ui/screens/homepage_screens.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -27,28 +29,42 @@ class _DashboardWidgetsState extends State<DashboardWidgets> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: CustomTheme.primaryColor,
-        currentIndex: _selectedIndex,
-        unselectedItemColor: CustomTheme.gray,
-        onTap: (value) {
+      bottomNavigationBar: BottomNavyBar(
+        selectedIndex: _selectedIndex,
+        showElevation: true,
+        onItemSelected: (index) => setState(() {
           _controller.animateToPage(
-            value,
+            index,
             duration: Duration(milliseconds: 300),
             curve: Curves.ease,
           );
-          setState(() {
-            _selectedIndex = value;
-          });
-        },
+        }),
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        iconSize: 22,
         items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_rounded),
-            label: "Home",
+          BottomNavyBarItem(
+            icon: Icon(CupertinoIcons.home),
+            title: Container(
+              child: Text('Home'),
+              padding: EdgeInsets.only(left: 8),
+            ),
+            activeColor: CustomTheme.primaryColor,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            label: "Cart",
+          BottomNavyBarItem(
+            icon: Icon(CupertinoIcons.shopping_cart),
+            title: Container(
+              child: Text('Users'),
+              padding: EdgeInsets.only(left: 8),
+            ),
+            activeColor: CustomTheme.lightBlueColor,
+          ),
+          BottomNavyBarItem(
+            icon: Icon(CupertinoIcons.cube),
+            title: Container(
+              child: Text('Orders'),
+              padding: EdgeInsets.only(left: 8),
+            ),
+            activeColor: CustomTheme.darkerBlueColor,
           ),
         ],
       ),
@@ -63,6 +79,7 @@ class _DashboardWidgetsState extends State<DashboardWidgets> {
         children: [
           HomepageScreens(),
           CartPage(),
+          Container(),
         ],
       ),
     );
