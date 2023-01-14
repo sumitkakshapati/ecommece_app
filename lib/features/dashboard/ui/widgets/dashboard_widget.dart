@@ -2,6 +2,7 @@ import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:ecommerce_app/common/custom_theme.dart';
 import 'package:ecommerce_app/features/cart/ui/screens/cart_page.dart';
 import 'package:ecommerce_app/features/homepage/ui/screens/homepage_screens.dart';
+import 'package:ecommerce_app/features/orders/ui/screens/order_screens.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -79,7 +80,7 @@ class _DashboardWidgetsState extends State<DashboardWidgets> {
         children: [
           HomepageScreens(),
           CartPage(),
-          Container(),
+          OrderScreens(),
         ],
       ),
     );
