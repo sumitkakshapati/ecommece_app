@@ -1,11 +1,13 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:ecommerce_app/common/custom_theme.dart';
+import 'package:ecommerce_app/features/auth/ui/screens/login_page.dart';
 import 'package:ecommerce_app/features/cart/ui/screens/cart_page.dart';
 import 'package:ecommerce_app/features/homepage/ui/screens/homepage_screens.dart';
 import 'package:ecommerce_app/features/orders/ui/screens/order_screens.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:page_transition/page_transition.dart';
 
 class DashboardWidgets extends StatefulWidget {
   const DashboardWidgets({super.key});
@@ -29,6 +31,19 @@ class _DashboardWidgetsState extends State<DashboardWidgets> {
             fontSize: 16,
           ),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.pushAndRemoveUntil(
+                context,
+                PageTransition(
+                    child: LoginPage(), type: PageTransitionType.fade),
+                (route) => false,
+              );
+            },
+            icon: Icon(Icons.logout),
+          )
+        ],
       ),
       bottomNavigationBar: BottomNavyBar(
         selectedIndex: _selectedIndex,
