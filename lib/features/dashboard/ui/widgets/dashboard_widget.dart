@@ -53,7 +53,7 @@ class _DashboardWidgetsState extends State<DashboardWidgets> {
           BottomNavyBarItem(
             icon: Icon(CupertinoIcons.shopping_cart),
             title: Container(
-              child: Text('Users'),
+              child: Text('Cart'),
               padding: EdgeInsets.only(left: 8),
             ),
             activeColor: CustomTheme.lightBlueColor,
