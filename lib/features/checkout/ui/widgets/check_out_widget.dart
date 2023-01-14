@@ -37,8 +37,8 @@ class _CheckoutWidgetsState extends State<CheckoutWidgets> {
               children: [
                 SizedBox(height: 20),
                 CustomTextField(
-                  label: "First Name",
-                  hintText: "First Name",
+                  label: "Full Name",
+                  hintText: "Full Name",
                 ),
                 CustomTextField(
                   label: "Phone Number",

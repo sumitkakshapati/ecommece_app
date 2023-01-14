@@ -83,9 +83,11 @@ class _CartCardState extends State<CartCard> {
                     IconButton(
                       splashRadius: 10.0,
                       onPressed: () {
-                        setState(() {
-                          _quantity--;
-                        });
+                        if (_quantity > 1) {
+                          setState(() {
+                            _quantity--;
+                          });
+                        }
                       },
                       icon: const Icon(
                         Icons.remove,
