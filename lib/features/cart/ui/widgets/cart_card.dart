@@ -1,6 +1,7 @@
 import 'package:ecommerce_app/common/assets.dart';
 import 'package:ecommerce_app/common/custom_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CartCard extends StatefulWidget {
   const CartCard({super.key});
@@ -56,16 +57,16 @@ class _CartCardState extends State<CartCard> {
                       "Iphone 14 Pro Max",
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
+                      style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w600,
                         fontSize: 14,
                       ),
                     ),
-                    SizedBox(height: 6),
+                    SizedBox(height: 4),
                     Text(
                       "Rs. 2,00,000",
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w900,
+                      style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w500,
                         fontSize: 14,
                       ),
                     ),
@@ -94,9 +95,9 @@ class _CartCardState extends State<CartCard> {
                     ),
                     Text(
                       '${_quantity}',
-                      style: const TextStyle(
+                      style: GoogleFonts.poppins(
                         fontSize: 14,
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                     IconButton(
