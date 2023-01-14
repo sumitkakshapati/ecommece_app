@@ -1,6 +1,7 @@
 import 'package:ecommerce_app/common/buttons/custom_rounded_button.dart';
 import 'package:ecommerce_app/common/custom_theme.dart';
 import 'package:ecommerce_app/common/textfield/custom_textfield.dart';
+import 'package:ecommerce_app/features/checkout/ui/widgets/order_confirm_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -54,7 +55,14 @@ class _CheckoutWidgetsState extends State<CheckoutWidgets> {
                 ),
                 CustomRoundedButtom(
                   title: "Confirm Order",
-                  onPressed: () {},
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return OrderConfirmDialog();
+                      },
+                    );
+                  },
                 )
               ],
             ),
