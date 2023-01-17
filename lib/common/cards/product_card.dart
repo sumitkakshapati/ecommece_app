@@ -1,10 +1,17 @@
-import 'package:ecommerce_app/common/assets.dart';
-import 'package:ecommerce_app/common/custom_theme.dart';
-import 'package:ecommerce_app/features/homepage/ui/screens/product_details_screens.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:nepali_utils/nepali_utils.dart';
 import 'package:page_transition/page_transition.dart';
 
+import 'package:ecommerce_app/common/custom_theme.dart';
+import 'package:ecommerce_app/features/homepage/model/products.dart';
+import 'package:ecommerce_app/features/homepage/ui/screens/product_details_screens.dart';
+
 class ProductCards extends StatelessWidget {
+  final Product product;
+
+  const ProductCards({Key? key, required this.product}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -34,7 +41,7 @@ class ProductCards extends StatelessWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(12),
                     child: Image.network(
-                      Assets.productImge,
+                      product.image,
                       height: 220,
                       fit: BoxFit.cover,
                       width: double.infinity,
@@ -44,7 +51,7 @@ class ProductCards extends StatelessWidget {
                     padding: EdgeInsets.only(top: 12, bottom: 0),
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      "Iphone 14 Pro Max",
+                      product.name,
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w700,
@@ -52,7 +59,7 @@ class ProductCards extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "Apple",
+                    product.brand,
                     style: TextStyle(
                       fontSize: 12,
                       color: CustomTheme.darkGrayColor,
@@ -63,7 +70,7 @@ class ProductCards extends StatelessWidget {
                     padding: EdgeInsets.only(bottom: 12),
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      "Rs. 200,000",
+                      "${product.formatedPrice}",
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w700,
