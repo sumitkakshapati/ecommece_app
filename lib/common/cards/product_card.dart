@@ -21,7 +21,7 @@ class ProductCards extends StatelessWidget {
         onTap: () {
           Navigator.of(context).push(
             PageTransition(
-              child: ProductDetailsScreens(),
+              child: ProductDetailsScreens(productId: product.id),
               type: PageTransitionType.fade,
             ),
           );

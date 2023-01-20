@@ -8,6 +8,7 @@ class Product {
   String brand;
   num price;
   List<String> catagories;
+  bool isInCart;
 
   Product({
     required this.id,
@@ -17,6 +18,7 @@ class Product {
     required this.brand,
     required this.price,
     required this.catagories,
+    required this.isInCart,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
@@ -29,6 +31,7 @@ class Product {
       price: json['price'],
       catagories:
           List.from(json['catagories']).map((e) => e.toString()).toList(),
+      isInCart: json["added_in_cart"] ?? false,
     );
   }
 
