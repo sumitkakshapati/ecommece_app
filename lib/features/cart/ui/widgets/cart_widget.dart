@@ -21,7 +21,8 @@ class CartWidget extends StatefulWidget {
   State<CartWidget> createState() => _CartWidgetState();
 }
 
-class _CartWidgetState extends State<CartWidget> {
+class _CartWidgetState extends State<CartWidget>
+    with AutomaticKeepAliveClientMixin {
   bool _isloading = false;
 
   _updateLoadingState(bool status) {
@@ -32,6 +33,7 @@ class _CartWidgetState extends State<CartWidget> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return LoadingOverlay(
       isLoading: _isloading,
       child: BlocListener<UpdateCartQuantityCubit, CommonState>(
@@ -137,4 +139,7 @@ class _CartWidgetState extends State<CartWidget> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

@@ -1,16 +1,30 @@
 import 'package:ecommerce_app/common/assets.dart';
 import 'package:ecommerce_app/common/custom_theme.dart';
+import 'package:ecommerce_app/features/orders/enum/order_status.dart';
+import 'package:ecommerce_app/features/orders/model/orders.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class OrderCard extends StatefulWidget {
-  const OrderCard({super.key});
+  final Orders orders;
+  const OrderCard({super.key, required this.orders});
 
   @override
   State<OrderCard> createState() => _OrderCardState();
 }
 
 class _OrderCardState extends State<OrderCard> {
+  Color get getOrderColor {
+    switch (widget.orders.formatedStatus) {
+      case OrderStatus.Completed:
+        return CustomTheme.green;
+      case OrderStatus.Processing:
+        return CustomTheme.blue;
+      case OrderStatus.Cancelled:
+        return CustomTheme.red;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,7 +53,7 @@ class _OrderCardState extends State<OrderCard> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: Image.network(
-                    Assets.productImge,
+                    widget.orders.cartItems.first.product.image,
                     width: 70,
                     height: 70,
                     fit: BoxFit.cover,
@@ -53,7 +67,7 @@ class _OrderCardState extends State<OrderCard> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                      "Iphone 14 Pro Max",
+                      widget.orders.cartItems.first.product.name,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: GoogleFonts.poppins(
@@ -63,7 +77,7 @@ class _OrderCardState extends State<OrderCard> {
                     ),
                     SizedBox(height: 4),
                     Text(
-                      "Rs. 2,00,000",
+                      "Rs. ${widget.orders.price}",
                       style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w500,
                         fontSize: 14,
@@ -74,11 +88,11 @@ class _OrderCardState extends State<OrderCard> {
                       padding:
                           EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                       decoration: BoxDecoration(
-                        color: CustomTheme.blue,
+                        color: getOrderColor,
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Text(
-                        "Processing",
+                        "${widget.orders.status}",
                         style: GoogleFonts.poppins(
                           fontWeight: FontWeight.w600,
                           fontSize: 10,

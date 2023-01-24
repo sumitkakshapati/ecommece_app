@@ -1,6 +1,9 @@
 import 'package:ecommerce_app/common/custom_theme.dart';
 import 'package:ecommerce_app/features/auth/resources/user_repository.dart';
+import 'package:ecommerce_app/features/checkout/cubit/checkout_cubit.dart';
+import 'package:ecommerce_app/features/homepage/cubit/add_to_cart_cubit.dart';
 import 'package:ecommerce_app/features/homepage/resources/product_repository.dart';
+import 'package:ecommerce_app/features/orders/resources/order_repository.dart';
 import 'package:ecommerce_app/features/splash/ui/pages/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,14 +28,34 @@ class MyApp extends StatelessWidget {
             userRepository: RepositoryProvider.of<UserRepository>(context),
           ),
         ),
-      ],
-      child: MaterialApp(
-        title: 'Ecommerce',
-        theme: ThemeData(
-          primaryColor: CustomTheme.primaryColor,
-          textTheme: GoogleFonts.poppinsTextTheme(),
+        RepositoryProvider(
+          create: (context) => OrderRepository(
+            userRepository: RepositoryProvider.of<UserRepository>(context),
+          ),
         ),
-        home: const SplashPage(),
+      ],
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => AddToCartCubit(
+              repository: RepositoryProvider.of<ProductRepository>(context),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => CheckoutCubit(
+              productRepository:
+                  RepositoryProvider.of<ProductRepository>(context),
+            ),
+          )
+        ],
+        child: MaterialApp(
+          title: 'Ecommerce',
+          theme: ThemeData(
+            primaryColor: CustomTheme.primaryColor,
+            textTheme: GoogleFonts.poppinsTextTheme(),
+          ),
+          home: const SplashPage(),
+        ),
       ),
     );
   }

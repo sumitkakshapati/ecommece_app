@@ -1,15 +1,18 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:ecommerce_app/common/custom_theme.dart';
+import 'package:ecommerce_app/common/textfield/custom_textfield.dart';
+import 'package:ecommerce_app/common/textfield/search_text_field.dart';
 import 'package:ecommerce_app/common/utils/snackbar_utils.dart';
 import 'package:ecommerce_app/features/auth/resources/user_repository.dart';
 import 'package:ecommerce_app/features/auth/ui/screens/login_page.dart';
 import 'package:ecommerce_app/features/cart/ui/screens/cart_page.dart';
+import 'package:ecommerce_app/features/homepage/cubit/home_page_event.dart';
+import 'package:ecommerce_app/features/homepage/cubit/homepage_cubit.dart';
 import 'package:ecommerce_app/features/homepage/ui/screens/homepage_screens.dart';
 import 'package:ecommerce_app/features/orders/ui/screens/order_screens.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 
 class DashboardWidgets extends StatefulWidget {
@@ -21,17 +24,55 @@ class DashboardWidgets extends StatefulWidget {
 
 class _DashboardWidgetsState extends State<DashboardWidgets> {
   int _selectedIndex = 0;
+  final TextEditingController _textController = TextEditingController();
   PageController _controller = PageController();
 
   @override
+  void initState() {
+    super.initState();
+    context.read<HomepageCubit>().add(
+          FetchAllHomepageDataEvent(query: _textController.text),
+        );
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final _theme = Theme.of(context);
+    final _textTheme = _theme.textTheme;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: CustomTheme.primaryColor,
-        title: Text(
-          "E-Commerce",
-          style: GoogleFonts.poppins(
-            fontSize: 16,
+        centerTitle: true,
+        title: Container(
+          height: AppBar().preferredSize.height,
+          width: MediaQuery.of(context).size.width,
+          child: Row(
+            children: [
+              Expanded(
+                child: Container(
+                  child: SearchtextField(
+                    controller: _textController,
+                    onSearchPressed: () {
+                      FocusScope.of(context).unfocus();
+                      context.read<HomepageCubit>().add(
+                            FetchAllHomepageDataEvent(
+                                query: _textController.text),
+                          );
+                    },
+                  ),
+                ),
+              ),
+              IconButton(
+                onPressed: () {
+                  FocusScope.of(context).unfocus();
+                  context.read<HomepageCubit>().add(
+                        FetchAllHomepageDataEvent(query: _textController.text),
+                      );
+                },
+                icon: Icon(Icons.search),
+              ),
+            ],
           ),
         ),
         actions: [
@@ -99,7 +140,9 @@ class _DashboardWidgetsState extends State<DashboardWidgets> {
           });
         },
         children: [
-          HomepageScreens(),
+          HomepageScreens(
+            searchController: _textController,
+          ),
           CartPage(),
           OrderScreens(),
         ],

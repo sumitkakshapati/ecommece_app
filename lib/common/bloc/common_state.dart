@@ -2,7 +2,11 @@ abstract class CommonState {}
 
 class CommonInitialState extends CommonState {}
 
-class CommonLoadingState extends CommonState {}
+class CommonLoadingState extends CommonState {
+  final bool isRefreshing;
+
+  CommonLoadingState({this.isRefreshing = false});
+}
 
 class CommonSuccessState<T> extends CommonState {
   final T data;

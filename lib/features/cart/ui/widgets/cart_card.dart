@@ -1,4 +1,3 @@
-import 'package:ecommerce_app/common/assets.dart';
 import 'package:ecommerce_app/common/bloc/common_state.dart';
 import 'package:ecommerce_app/common/custom_theme.dart';
 import 'package:ecommerce_app/features/cart/cubit/update_cart_quantity_cubit.dart';

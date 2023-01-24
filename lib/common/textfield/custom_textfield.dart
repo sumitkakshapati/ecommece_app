@@ -35,14 +35,15 @@ class CustomTextField extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            label,
-            style: _textTheme.headline6!.copyWith(
-              fontWeight: FontWeight.w500,
-              fontSize: 14,
+          if (label.isNotEmpty)
+            Text(
+              label,
+              style: _textTheme.headline6!.copyWith(
+                fontWeight: FontWeight.w500,
+                fontSize: 14,
+              ),
             ),
-          ),
-          const SizedBox(height: 12),
+          if (label.isNotEmpty) const SizedBox(height: 12),
           Container(
             child: TextFormField(
               style: _textTheme.headline6!.copyWith(

@@ -10,34 +10,74 @@ class ProductRepository {
 
   ProductRepository({required this.userRepository});
 
-  Future<DataResponse<List<Product>>> getAllProducts() async {
+  final List<Product> _products = [];
+
+  List<Product> get products => _products;
+
+  int _totalProductCount = -1;
+  int _currentProductpage = 1;
+  String _oldQuery = "";
+
+  Future<DataResponse<List<Product>>> getAllProducts(
+      {bool isLoadMore = false, required String query}) async {
     try {
+      if (isLoadMore &&
+          _products.length == _totalProductCount &&
+          _oldQuery == query) {
+        return DataResponse.success(_products);
+      }
+
+      if (isLoadMore && _oldQuery == query) {
+        _currentProductpage++;
+      } else {
+        _products.clear();
+        _totalProductCount = -1;
+        _currentProductpage = 1;
+        _oldQuery = query;
+      }
+
       final _dio = Dio();
 
       final _headers = {
         "Authorization": "Bearer ${userRepository.token}",
       };
 
+      final Map<String, dynamic> _param = {
+        "page": _currentProductpage,
+      };
+
+      if (query.isNotEmpty) {
+        _param["q"] = query;
+      }
+
       final _response = await _dio.get(
         "${Constants.baseUrl}/products",
+        queryParameters: _param,
         options: Options(
           headers: _headers,
         ),
       );
       if (_response.statusCode == null) {
+        _currentProductpage--;
         return DataResponse.error("Unable to fetch products");
       }
       if (_response.statusCode! >= 200 && _response.statusCode! < 300) {
         final _tempList = List.from(_response.data["results"]);
-        final _products = _tempList.map((e) => Product.fromJson(e)).toList();
-        return DataResponse.success(_products);
+        _totalProductCount = _response.data["total"];
+        final _tempProducts =
+            _tempList.map((e) => Product.fromJson(e)).toList();
+        _products.addAll(_tempProducts);
+        return DataResponse.success(_tempProducts);
       } else {
+        _currentProductpage--;
         return DataResponse.error(_response.data["message"]);
       }
     } on DioError catch (e) {
+      _currentProductpage--;
       return DataResponse.error(
           e.response?.data["message"] ?? "Unable to login user");
     } catch (e) {
+      _currentProductpage--;
       return DataResponse.error(e.toString());
     }
   }
